@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.ibm.rpc_starter.provider.SimplerRpcProviderAutoConfiguration,\
+com.ibm.rpc_starter.serialize.SerializeAutoConfiguration,\
+com.ibm.rpc_starter.consumer.SimplerConsumerAutoConfiguration
+
