@@ -44,12 +44,9 @@ public class SimpleRpcConsumerPostProcessor implements BeanFactoryPostProcessor,
      */
     private Map<String, BeanDefinition> beanDefinitions = new HashMap<>();
 
-    private RPCDecoder rpcDecoder;
-    private RPCEncoder rpcEncoder;
-    public SimpleRpcConsumerPostProcessor(RPCDecoder rpcDecoder,RPCEncoder rpcEncoder)
+
+    public SimpleRpcConsumerPostProcessor()
     {
-        this.rpcDecoder=rpcDecoder;
-        this.rpcEncoder=rpcEncoder;
     }
 
     /**
@@ -110,8 +107,6 @@ public class SimpleRpcConsumerPostProcessor implements BeanFactoryPostProcessor,
         beanDefinitionBuilder.addPropertyValue("serviceVersion", simpleRpcConsumer.serviceVersion());
         beanDefinitionBuilder.addPropertyValue("registryType", simpleRpcConsumer.registerType());
         beanDefinitionBuilder.addPropertyValue("registryAddress", simpleRpcConsumer.registerAddress());
-        beanDefinitionBuilder.addPropertyValue("rpcEncoder",rpcEncoder);
-        beanDefinitionBuilder.addPropertyValue("rpcDecoder",rpcDecoder);
 
         BeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
 

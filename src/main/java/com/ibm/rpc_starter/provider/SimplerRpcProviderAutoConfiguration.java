@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @Slf4j
-@ConditionalOnClass(RpcCommonProperty.class) // 表示只有指定的class在classpath上时才能被注册
+@ConditionalOnClass(SimpleRpcProviderBean.class) // 表示只有指定的class在classpath上时才能被注册
 @EnableConfigurationProperties(RpcCommonProperty.class) // 激活@ConfigurationProperties
 public class SimplerRpcProviderAutoConfiguration {
 

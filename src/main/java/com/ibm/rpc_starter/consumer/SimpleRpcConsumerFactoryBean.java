@@ -8,6 +8,8 @@ import com.ibm.rpc_starter.serialize.RPCDecoder;
 import com.ibm.rpc_starter.serialize.RPCEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Proxy;
 
@@ -19,6 +21,7 @@ import java.lang.reflect.Proxy;
  * @Description: 接口定义了一种创建Bean的机制，允许你在Bean的实例化过程中进行自定义逻辑，这是一个创建简单bean的工厂
  */
 @Slf4j
+@Component
 public class SimpleRpcConsumerFactoryBean implements FactoryBean {
 
     /**
@@ -46,8 +49,10 @@ public class SimpleRpcConsumerFactoryBean implements FactoryBean {
      */
     private Object object;
 
+    @Autowired
     private RPCEncoder rpcEncoder;
 
+    @Autowired
     private RPCDecoder rpcDecoder;
 
     /**
