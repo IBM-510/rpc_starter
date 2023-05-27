@@ -86,13 +86,6 @@ public class SimpleRpcConsumerPostProcessor implements BeanFactoryPostProcessor,
      * @param field 属性
      */
     private void processConsumerBeanDefinition(Field field) {
-        if(field.getName().equals("helloworldService")) {
-            log.info("i find the helloworldService!!!!!!!!!!");
-            Annotation[] annotations = field.getAnnotations();
-            for (Annotation annotation : annotations) {
-                log.info(String.valueOf(annotation));
-            }
-        }
         SimpleRpcConsumer simpleRpcConsumer = AnnotationUtils.getAnnotation(field, SimpleRpcConsumer.class);
 
         //筛选出打了rpc consumer注解的属性

@@ -9,6 +9,7 @@ import com.ibm.rpc_starter.serialize.RPCEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Proxy;
@@ -53,6 +54,7 @@ public class SimpleRpcConsumerFactoryBean implements FactoryBean {
     private RPCEncoder rpcEncoder;
 
     @Autowired
+    @Qualifier("rpcDecoder_consumer") // 添加限定符
     private RPCDecoder rpcDecoder;
 
     /**

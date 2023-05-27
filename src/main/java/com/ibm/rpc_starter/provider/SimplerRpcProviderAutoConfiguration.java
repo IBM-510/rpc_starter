@@ -9,6 +9,7 @@ import com.ibm.rpc_starter.serialize.RPCDecoder;
 import com.ibm.rpc_starter.serialize.RPCEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,6 +37,7 @@ public class SimplerRpcProviderAutoConfiguration {
     private RPCEncoder rpcEncoder;
 
     @Autowired
+    @Qualifier("rpcDecoder_provider") // 添加限定符
     private RPCDecoder rpcDecoder;
 
     @Bean
