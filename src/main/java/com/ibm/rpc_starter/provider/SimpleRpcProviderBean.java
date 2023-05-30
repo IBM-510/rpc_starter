@@ -8,10 +8,7 @@ import com.ibm.rpc_starter.registry.model.ServiceMetaConfig;
 import com.ibm.rpc_starter.serialize.RPCDecoder;
 import com.ibm.rpc_starter.serialize.RPCEncoder;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -117,10 +114,12 @@ public class SimpleRpcProviderBean implements InitializingBean, BeanPostProcesso
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) {
+                        RPCEncoder rpcEncoder1=new RPCEncoder(rpcEncoder);
+                        RPCDecoder rpcDecoder1=new RPCDecoder(rpcDecoder);
                         socketChannel.pipeline()
                                 .addLast(new LengthFieldBasedFrameDecoder(65535,0,4,0,0))
-                                .addLast(rpcDecoder)
-                                .addLast(rpcEncoder)
+                                .addLast(rpcDecoder1)
+                                .addLast(rpcEncoder1)
                                 .addLast(new SimpleRpcProviderNettyHandler(providerBeanMap))
                         ;
                     }

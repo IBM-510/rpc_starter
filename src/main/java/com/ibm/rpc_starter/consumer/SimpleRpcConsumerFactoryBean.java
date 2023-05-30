@@ -6,6 +6,7 @@ import com.ibm.rpc_starter.registry.cache.ServiceProviderLocalCache;
 import com.ibm.rpc_starter.registry.zk.ZkServiceRegistry;
 import com.ibm.rpc_starter.serialize.RPCDecoder;
 import com.ibm.rpc_starter.serialize.RPCEncoder;
+import io.netty.channel.ChannelHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;

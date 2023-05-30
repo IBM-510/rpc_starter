@@ -1,6 +1,7 @@
 package com.ibm.rpc_starter.serialize;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,10 @@ public class RPCEncoder extends MessageToByteEncoder {
         this.serializer=serializer;
     }
 
+    public RPCEncoder(RPCEncoder other)
+    {
+        this.serializer=other.serializer;
+    }
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, Object o, ByteBuf byteBuf) throws Exception {
         byte[] data = serializer.serialize(o);

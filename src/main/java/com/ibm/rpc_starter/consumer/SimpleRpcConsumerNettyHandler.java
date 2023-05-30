@@ -53,8 +53,8 @@ public class SimpleRpcConsumerNettyHandler extends SimpleChannelInboundHandler<S
 
     public SimpleRpcConsumerNettyHandler(ServiceRegistry serviceRegistry,RPCDecoder rpcDecoder,RPCEncoder rpcEncoder) {
         this.serviceRegistry = serviceRegistry;
-        this.rpcDecoder=rpcDecoder;
-        this.rpcEncoder=rpcEncoder;
+        this.rpcDecoder=new RPCDecoder(rpcDecoder);
+        this.rpcEncoder=new RPCEncoder(rpcEncoder);
     }
 
     /**
@@ -71,9 +71,10 @@ public class SimpleRpcConsumerNettyHandler extends SimpleChannelInboundHandler<S
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
+                            ChannelPipeline pipeline = socketChannel.pipeline();
+                            pipeline.addLast("rpcEncoder", rpcEncoder);
+                            pipeline.addLast("rpcDecoder", rpcDecoder);
                             socketChannel.pipeline()
-                                    .addLast(rpcEncoder)
-                                    .addLast(rpcDecoder)
                                     //通过.class获取此类型的实例（https://www.cnblogs.com/penglee/p/3993033.html）
                                     .addLast(SimpleRpcConsumerNettyHandler.this);
                         }

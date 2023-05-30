@@ -1,0 +1,19 @@
+# 项目中遇到的难点
+
+## 不同的序列化协议
+
+### hessian和kryo的区别
+&emsp;&emsp;Hessian是一种基于二进制协议的序列化框架。它提供了一种快速、紧凑和可移植的序列化方式，适用于在网络上传输对象。Hessian可以将Java对象转换为字节数组，以便在网络上传输，然后将字节数组重新转换为Java对象。它使用基于HTTP的RPC框架，支持多种编程语言和平台之间的对象传输。
+
+&emsp;&emsp;Kryo是另一种高性能的Java序列化框架。与Java自带的序列化机制相比，Kryo更快速、更紧凑，并且支持更多的数据类型。Kryo使用自定义的序列化方式，可以直接将Java对象转换为字节数组，或者将字节数组转换为Java对象，而无需像Java自带的序列化那样将整个对象图进行递归遍历和写入。
+
+&emsp;&emsp;Hessian和Kryo的主要区别在于它们的实现方式和性能特点。Hessian使用基于二进制的协议，可移植性较好，支持多种编程语言和平台。它的序列化过程比较简单，但相对而言稍慢一些。Kryo则更加注重性能和效率，它的序列化速度更快，生成的序列化字节数组也更紧凑。然而，Kryo的可移植性相对较差，因为它使用自定义的序列化方式。
+
+&emsp;&emsp;选择使用Hessian还是Kryo取决于你的具体需求。如果你需要在多种编程语言和平台之间进行对象传输，或者需要较好的可移植性，那么Hessian可能是一个不错的选择。如果你注重性能和效率，并且仅在Java环境中进行对象序列化和反序列化，那么Kryo可能更适合你的需求。
+
+&emsp;&emsp;需要注意的是，无论选择哪种序列化框架，都需要确保序列化和反序列化的一致性，即序列化和反序列化的代码应该匹配，并且对象的类定义在序列化和反序列化过程中应该保持一致，否则可能导致数据损坏或错误。
+
+### 实现利用配置文件配置不同的序列化协议  
+&emsp;&emsp;在RpcCommonProperty中添加字段用于指定序列化的协议类型将原来用new方法生成的RpcDecoder和RpcEncoder改为用Bean进行实例化 ，增加SerializeAutoConfiguration类实现自动配置，然后在SimplerRpcProviderAutoConfiguration中自动注入RpcDecoder和RpcEncoder，不过在consumer中的注入遇到了困难，由于BeanFactoryPostProcessor是一个接口，因此SimplerConsumerAutoConfiguration在生成该接口的实现类Bean的时候需要用静态方法，无法自动注入Bean  
+&emsp;&emsp;经过分析，BeanFactoryPostProcessor接口主要是用于
+

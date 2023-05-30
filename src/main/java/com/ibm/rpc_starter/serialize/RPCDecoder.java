@@ -27,6 +27,10 @@ public class RPCDecoder extends ByteToMessageDecoder {
         this.serializer=serializer;
         this.genericClass=genericClass;
     }
+    public RPCDecoder(RPCDecoder other) {
+        this.serializer = other.serializer;
+        this.genericClass = other.genericClass;
+    }
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
