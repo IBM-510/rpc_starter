@@ -10,6 +10,7 @@ import com.ibm.rpc_starter.registry.model.ServiceMetaConfig;
  * @Description: 注册中心服务接口定义
  */
 public interface ServiceRegistry {
+    //TODO 处理一个接口有多个实现类的情况
 
     /**
      * 注册服务

@@ -4,9 +4,8 @@ import com.ibm.rpc_starter.registry.ServiceProviderCache;
 import com.ibm.rpc_starter.registry.ServiceRegistry;
 import com.ibm.rpc_starter.registry.cache.ServiceProviderLocalCache;
 import com.ibm.rpc_starter.registry.zk.ZkServiceRegistry;
-import com.ibm.rpc_starter.serialize.RPCDecoder;
-import com.ibm.rpc_starter.serialize.RPCEncoder;
-import io.netty.channel.ChannelHandler;
+import com.ibm.rpc_starter.serialize.RPCConsumerDecoder;
+import com.ibm.rpc_starter.serialize.RPCConsumerEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +51,10 @@ public class SimpleRpcConsumerFactoryBean implements FactoryBean {
     private Object object;
 
     @Autowired
-    private RPCEncoder rpcEncoder;
+    private RPCConsumerEncoder rpcEncoder;
 
     @Autowired
-    @Qualifier("rpcDecoder_consumer") // 添加限定符
-    private RPCDecoder rpcDecoder;
+    private RPCConsumerDecoder rpcDecoder;
 
     /**
      * init方法，通过动态代理生成bean
@@ -121,11 +119,11 @@ public class SimpleRpcConsumerFactoryBean implements FactoryBean {
         this.registryAddress = registryAddress;
     }
 
-    public void setRpcEncoder(RPCEncoder rpcEncoder) {
+    public void setRpcEncoder(RPCConsumerEncoder rpcEncoder) {
         this.rpcEncoder = rpcEncoder;
     }
 
-    public void setRpcDecoder(RPCDecoder rpcDecoder) {
+    public void setRpcDecoder(RPCConsumerDecoder rpcDecoder) {
         this.rpcDecoder = rpcDecoder;
     }
 }

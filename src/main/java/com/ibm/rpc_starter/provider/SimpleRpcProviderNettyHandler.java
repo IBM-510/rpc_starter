@@ -48,6 +48,7 @@ public class SimpleRpcProviderNettyHandler extends SimpleChannelInboundHandler<S
                 simpleRpcResponse.setMsg(throwable.toString());
                 log.error("handle rpc request error", throwable);
             }
+            simpleRpcResponse.setSerializeType(simpleRpcRequest.getSerializeType());
             channelHandlerContext.writeAndFlush(simpleRpcResponse).addListener(
                     (ChannelFutureListener) channelFuture ->
                             log.info("return response for request " + simpleRpcRequest.getBizNO() + ",simpleRpcResponse=" + simpleRpcResponse));

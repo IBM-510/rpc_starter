@@ -12,22 +12,29 @@ import java.util.List;
  *
  * @Author: ibm_5100
  * @Date: 2023/05/23/15:44
- * @Description:
+ * @Description: 消费者解码器，将rpc返回结果解码
  */
 @Slf4j
-public class RPCDecoder extends ByteToMessageDecoder {
+public class RPCConsumerDecoder extends ByteToMessageDecoder {
+    public Serializer getSerializer() {
+        return serializer;
+    }
+
     private Serializer serializer;
     private Class<?> genericClass;
     /**
      * Netty传输的消息长度也就是对象序列化后对应的字节数组的大小，存储在 ByteBuf 头部
      */
     private static final int BODY_LENGTH = 4;
-    public RPCDecoder(Serializer serializer,Class<?> genericClass)
+    public RPCConsumerDecoder()
+    {}
+
+    public RPCConsumerDecoder(Serializer serializer, Class<?> genericClass)
     {
         this.serializer=serializer;
         this.genericClass=genericClass;
     }
-    public RPCDecoder(RPCDecoder other) {
+    public RPCConsumerDecoder(RPCConsumerDecoder other) {
         this.serializer = other.serializer;
         this.genericClass = other.genericClass;
     }

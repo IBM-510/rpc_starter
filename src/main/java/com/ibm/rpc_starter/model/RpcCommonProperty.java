@@ -37,7 +37,13 @@ public class RpcCommonProperty {
     /**
      * 是否开启服务器bean,默认关闭
      */
-    private String enable;
+    private String providerEnable;
+
+    /**
+     * 是否开启消费者bean,默认开启
+     */
+    private String consumerEnable;
+
     public String getServiceAddress() {
         return serviceAddress;
     }
@@ -54,8 +60,20 @@ public class RpcCommonProperty {
         return serializeType;
     }
 
-    public String getEnable() {
-        return enable;
+    public String getProviderEnable() {
+        return providerEnable;
+    }
+
+    public void setProviderEnable(String providerEnable) {
+        this.providerEnable = providerEnable;
+    }
+
+    public String getConsumerEnable() {
+        return consumerEnable;
+    }
+
+    public void setConsumerEnable(String consumerEnable) {
+        this.consumerEnable = consumerEnable;
     }
 
     public void setServiceAddress(String serviceAddress) {
@@ -74,7 +92,5 @@ public class RpcCommonProperty {
         this.serializeType = serializeType;
     }
 
-    public void setEnable(String enable) {
-        this.enable = enable;
-    }
+
 }

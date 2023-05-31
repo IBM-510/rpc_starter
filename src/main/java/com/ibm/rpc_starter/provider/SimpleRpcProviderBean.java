@@ -5,8 +5,10 @@ import com.ibm.rpc_starter.annotation.SimpleRpcProvider;
 import com.ibm.rpc_starter.common.util.ServiceUtils;
 import com.ibm.rpc_starter.registry.ServiceRegistry;
 import com.ibm.rpc_starter.registry.model.ServiceMetaConfig;
-import com.ibm.rpc_starter.serialize.RPCDecoder;
-import com.ibm.rpc_starter.serialize.RPCEncoder;
+import com.ibm.rpc_starter.serialize.RPCConsumerDecoder;
+import com.ibm.rpc_starter.serialize.RPCConsumerEncoder;
+import com.ibm.rpc_starter.serialize.RPCProviderDecoder;
+import com.ibm.rpc_starter.serialize.RPCProviderEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -30,6 +32,8 @@ import java.util.concurrent.*;
  */
 @Slf4j
 public class SimpleRpcProviderBean implements InitializingBean, BeanPostProcessor {
+    //TODO 如何解决消费者的序列化协议和生产者的序列化协议适配
+    //目前的想法是，初始
 
     /**
      * 地址
@@ -61,8 +65,8 @@ public class SimpleRpcProviderBean implements InitializingBean, BeanPostProcesso
     private EventLoopGroup bossGroup   = null;
     private EventLoopGroup workerGroup = null;
 
-    private RPCDecoder rpcDecoder;
-    private RPCEncoder rpcEncoder;
+    private RPCProviderDecoder rpcDecoder;
+    private RPCProviderEncoder rpcEncoder;
 
     /**
      * 构造函数
@@ -70,7 +74,7 @@ public class SimpleRpcProviderBean implements InitializingBean, BeanPostProcesso
      * @param address 地址
      * @param serviceRegistry 服务注册中心
      */
-    public SimpleRpcProviderBean(String address, ServiceRegistry serviceRegistry,RPCEncoder rpcEncoder,RPCDecoder rpcDecoder) {
+    public SimpleRpcProviderBean(String address, ServiceRegistry serviceRegistry, RPCProviderEncoder rpcEncoder, RPCProviderDecoder rpcDecoder) {
         this.address = address;
         this.serviceRegistry = serviceRegistry;
         this.rpcDecoder=rpcDecoder;
@@ -114,8 +118,8 @@ public class SimpleRpcProviderBean implements InitializingBean, BeanPostProcesso
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) {
-                        RPCEncoder rpcEncoder1=new RPCEncoder(rpcEncoder);
-                        RPCDecoder rpcDecoder1=new RPCDecoder(rpcDecoder);
+                        RPCProviderEncoder rpcEncoder1=new RPCProviderEncoder(rpcEncoder);
+                        RPCProviderDecoder rpcDecoder1=new RPCProviderDecoder(rpcDecoder);
                         socketChannel.pipeline()
                                 .addLast(new LengthFieldBasedFrameDecoder(65535,0,4,0,0))
                                 .addLast(rpcDecoder1)
@@ -181,7 +185,6 @@ public class SimpleRpcProviderBean implements InitializingBean, BeanPostProcesso
         //获取bean上的注解
         SimpleRpcProvider simpleRpcProvider = bean.getClass().getAnnotation(SimpleRpcProvider.class);
         if (simpleRpcProvider == null) {
-            //TODO 测试是否会扫描所有的bean
             //无注解直接return原始的bean
             return bean;
         }

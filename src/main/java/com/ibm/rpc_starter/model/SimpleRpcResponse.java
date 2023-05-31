@@ -29,4 +29,8 @@ public class SimpleRpcResponse implements Serializable {
      * 实际结果
      */
     private Object data;
+    /**
+     * 编码类型
+     */
+    private int serializeType;
 }

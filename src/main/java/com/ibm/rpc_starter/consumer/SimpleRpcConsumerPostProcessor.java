@@ -1,8 +1,6 @@
 package com.ibm.rpc_starter.consumer;
 
 import com.ibm.rpc_starter.annotation.SimpleRpcConsumer;
-import com.ibm.rpc_starter.serialize.RPCDecoder;
-import com.ibm.rpc_starter.serialize.RPCEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -16,7 +14,6 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;

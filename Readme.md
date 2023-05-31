@@ -17,3 +17,7 @@
 &emsp;&emsp;在RpcCommonProperty中添加字段用于指定序列化的协议类型将原来用new方法生成的RpcDecoder和RpcEncoder改为用Bean进行实例化 ，增加SerializeAutoConfiguration类实现自动配置，然后在SimplerRpcProviderAutoConfiguration中自动注入RpcDecoder和RpcEncoder，不过在consumer中的注入遇到了困难，由于BeanFactoryPostProcessor是一个接口，因此SimplerConsumerAutoConfiguration在生成该接口的实现类Bean的时候需要用静态方法，无法自动注入Bean  
 &emsp;&emsp;经过分析，BeanFactoryPostProcessor接口主要是用于
 
+### 服务端需要根据客户端的编码协议来决定自己的编码协议
+&emsp;&emsp;客户端的编码器需要在缓冲区内写入数据的长度和自身使用的编码协议类型，
+不过解码器只需要分析长度和数据，服务端的解码器需要接收长度，编码协议和数据，编码器则只需要
+

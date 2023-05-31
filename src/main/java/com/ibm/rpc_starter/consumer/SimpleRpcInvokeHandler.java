@@ -1,10 +1,13 @@
 package com.ibm.rpc_starter.consumer;
 
+import com.ibm.rpc_starter.common.enumeration.SerializeTypeEnum;
 import com.ibm.rpc_starter.model.SimpleRpcRequest;
 import com.ibm.rpc_starter.model.SimpleRpcResponse;
 import com.ibm.rpc_starter.registry.ServiceRegistry;
-import com.ibm.rpc_starter.serialize.RPCDecoder;
-import com.ibm.rpc_starter.serialize.RPCEncoder;
+import com.ibm.rpc_starter.serialize.RPCConsumerDecoder;
+import com.ibm.rpc_starter.serialize.RPCConsumerEncoder;
+import com.ibm.rpc_starter.serialize.hessian.HessianSerializer;
+import com.ibm.rpc_starter.serialize.kryo.KryoSerializer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
@@ -30,14 +33,14 @@ public class SimpleRpcInvokeHandler<T> implements InvocationHandler {
      * 注册中心
      */
     private ServiceRegistry serviceRegistry;
-    private RPCDecoder rpcDecoder;
-    private RPCEncoder rpcEncoder;
+    private RPCConsumerDecoder rpcDecoder;
+    private RPCConsumerEncoder rpcEncoder;
 
     public SimpleRpcInvokeHandler() {
 
     }
 
-    public SimpleRpcInvokeHandler(String serviceVersion, ServiceRegistry serviceRegistry,RPCDecoder rpcDecoder,RPCEncoder rpcEncoder) {
+    public SimpleRpcInvokeHandler(String serviceVersion, ServiceRegistry serviceRegistry, RPCConsumerDecoder rpcDecoder, RPCConsumerEncoder rpcEncoder) {
         this.serviceVersion = serviceVersion;
         this.serviceRegistry = serviceRegistry;
         this.rpcDecoder=rpcDecoder;
@@ -53,6 +56,12 @@ public class SimpleRpcInvokeHandler<T> implements InvocationHandler {
         simpleRpcRequest.setMethodName(method.getName());
         simpleRpcRequest.setParamTypes(method.getParameterTypes());
         simpleRpcRequest.setParamValues(args);
+        if(rpcEncoder.getSerializer() instanceof HessianSerializer)
+            simpleRpcRequest.setSerializeType(SerializeTypeEnum.HESSIAN_TYPE.getType());
+        else if(rpcEncoder.getSerializer() instanceof KryoSerializer)
+            simpleRpcRequest.setSerializeType(SerializeTypeEnum.KRYO_TYPE.getType());
+        else
+            log.error("the type of the serialize is unknown");
 
         log.info("begin simpleRpcRequest=" + simpleRpcRequest.toString());
 

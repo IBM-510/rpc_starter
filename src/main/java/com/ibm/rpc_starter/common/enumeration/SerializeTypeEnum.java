@@ -15,7 +15,8 @@ import lombok.ToString;
 @Getter
 @ToString
 public enum SerializeTypeEnum {
-    KRYO_TYPE("kryo"),
-    HESSIAN_TYPE("hessian");
+    KRYO_TYPE("kryo",0),
+    HESSIAN_TYPE("hessian",1);
     private final String message;
+    private final int type;
 }

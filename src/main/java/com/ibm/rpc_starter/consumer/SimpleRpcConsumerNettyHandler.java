@@ -5,8 +5,8 @@ import com.ibm.rpc_starter.model.SimpleRpcRequest;
 import com.ibm.rpc_starter.model.SimpleRpcResponse;
 import com.ibm.rpc_starter.registry.ServiceRegistry;
 import com.ibm.rpc_starter.registry.model.ServiceMetaConfig;
-import com.ibm.rpc_starter.serialize.RPCDecoder;
-import com.ibm.rpc_starter.serialize.RPCEncoder;
+import com.ibm.rpc_starter.serialize.RPCConsumerDecoder;
+import com.ibm.rpc_starter.serialize.RPCConsumerEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -48,13 +48,13 @@ public class SimpleRpcConsumerNettyHandler extends SimpleChannelInboundHandler<S
      * lock
      */
     private final Object lock = new Object();
-    private RPCDecoder rpcDecoder;
-    private RPCEncoder rpcEncoder;
+    private RPCConsumerDecoder rpcDecoder;
+    private RPCConsumerEncoder rpcEncoder;
 
-    public SimpleRpcConsumerNettyHandler(ServiceRegistry serviceRegistry,RPCDecoder rpcDecoder,RPCEncoder rpcEncoder) {
+    public SimpleRpcConsumerNettyHandler(ServiceRegistry serviceRegistry, RPCConsumerDecoder rpcDecoder, RPCConsumerEncoder rpcEncoder) {
         this.serviceRegistry = serviceRegistry;
-        this.rpcDecoder=new RPCDecoder(rpcDecoder);
-        this.rpcEncoder=new RPCEncoder(rpcEncoder);
+        this.rpcDecoder=new RPCConsumerDecoder(rpcDecoder);
+        this.rpcEncoder=new RPCConsumerEncoder(rpcEncoder);
     }
 
     /**

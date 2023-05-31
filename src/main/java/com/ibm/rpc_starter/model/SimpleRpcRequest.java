@@ -44,4 +44,8 @@ public class SimpleRpcRequest implements Serializable {
      * 参数值列表
      */
     private Object[] paramValues;
+    /**
+     * 编码类型
+     */
+    private int serializeType;
 }

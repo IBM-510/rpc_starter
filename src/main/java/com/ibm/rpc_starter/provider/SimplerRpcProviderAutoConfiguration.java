@@ -5,11 +5,10 @@ import com.ibm.rpc_starter.registry.ServiceProviderCache;
 import com.ibm.rpc_starter.registry.ServiceRegistry;
 import com.ibm.rpc_starter.registry.cache.ServiceProviderLocalCache;
 import com.ibm.rpc_starter.registry.zk.ZkServiceRegistry;
-import com.ibm.rpc_starter.serialize.RPCDecoder;
-import com.ibm.rpc_starter.serialize.RPCEncoder;
+import com.ibm.rpc_starter.serialize.RPCProviderDecoder;
+import com.ibm.rpc_starter.serialize.RPCProviderEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -34,15 +33,13 @@ public class SimplerRpcProviderAutoConfiguration {
     private RpcCommonProperty rpcCommonProperty;
 
     @Autowired
-    private RPCEncoder rpcEncoder;
+    private RPCProviderEncoder rpcEncoder;
 
     @Autowired
-    @Qualifier("rpcDecoder_provider") // 添加限定符
-    private RPCDecoder rpcDecoder;
+    private RPCProviderDecoder rpcDecoder;
 
     @Bean
-    @ConditionalOnProperty(name = "ibm.simplerpc.enable", matchIfMissing = false)
-    @ConditionalOnMissingBean(SimpleRpcProviderBean.class) // 当容器没有此bean时，才注册
+    @ConditionalOnProperty(name = "ibm.simplerpc.provider-enable", matchIfMissing = false)
     public SimpleRpcProviderBean initRpcProvider() throws Exception {
 
         log.info("===================SimplerRpcProviderAutoConfiguration init，rpcCommonProperty=" + rpcCommonProperty.toString());
