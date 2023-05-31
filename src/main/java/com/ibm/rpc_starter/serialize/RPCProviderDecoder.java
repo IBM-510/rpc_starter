@@ -1,6 +1,5 @@
 package com.ibm.rpc_starter.serialize;
 
-import com.ibm.rpc_starter.model.SimpleRpcRequest;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;

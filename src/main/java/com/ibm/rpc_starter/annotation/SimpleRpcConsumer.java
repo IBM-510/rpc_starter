@@ -25,17 +25,5 @@ public @interface SimpleRpcConsumer {
      * @return
      */
     String serviceVersion() default "1.0.0";
-    //TODO 为什么有两个配置，这个注解配置一次，rpcCommonProperty也要配置一次，到底哪个配置有用
 
-    /**
-     * 注册中心类型-默认zk
-     * @return
-     */
-    String registerType() default "zookeeper";
-
-    /**
-     * 注册中心地址
-     * @return
-     */
-    String registerAddress() default "127.0.0.1:2181";
 }

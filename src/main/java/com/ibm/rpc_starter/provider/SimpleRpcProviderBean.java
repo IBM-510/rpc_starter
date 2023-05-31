@@ -32,8 +32,6 @@ import java.util.concurrent.*;
  */
 @Slf4j
 public class SimpleRpcProviderBean implements InitializingBean, BeanPostProcessor {
-    //TODO 如何解决消费者的序列化协议和生产者的序列化协议适配
-    //目前的想法是，初始
 
     /**
      * 地址

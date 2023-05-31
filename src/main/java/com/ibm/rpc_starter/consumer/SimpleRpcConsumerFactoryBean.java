@@ -1,5 +1,6 @@
 package com.ibm.rpc_starter.consumer;
 
+import com.ibm.rpc_starter.model.RpcCommonProperty;
 import com.ibm.rpc_starter.registry.ServiceProviderCache;
 import com.ibm.rpc_starter.registry.ServiceRegistry;
 import com.ibm.rpc_starter.registry.cache.ServiceProviderLocalCache;
@@ -36,19 +37,12 @@ public class SimpleRpcConsumerFactoryBean implements FactoryBean {
     private String serviceVersion;
 
     /**
-     * 注册中心类型
-     */
-    private String registryType;
-
-    /**
-     * 注册中心地址
-     */
-    private String registryAddress;
-
-    /**
      * 实际的bean
      */
     private Object object;
+
+    @Autowired
+    private RpcCommonProperty rpcCommonProperty;
 
     @Autowired
     private RPCConsumerEncoder rpcEncoder;
@@ -63,7 +57,7 @@ public class SimpleRpcConsumerFactoryBean implements FactoryBean {
      */
     public void init() throws Exception {
         ServiceProviderCache serviceProviderCache = new ServiceProviderLocalCache();
-        ServiceRegistry zkServiceRegistry = new ZkServiceRegistry(registryAddress, serviceProviderCache);
+        ServiceRegistry zkServiceRegistry = new ZkServiceRegistry(rpcCommonProperty.getRegistryAddress(), serviceProviderCache);
 
         //动态代理
         this.object = Proxy.newProxyInstance(
@@ -111,13 +105,6 @@ public class SimpleRpcConsumerFactoryBean implements FactoryBean {
         this.serviceVersion = serviceVersion;
     }
 
-    public void setRegistryType(String registryType) {
-        this.registryType = registryType;
-    }
-
-    public void setRegistryAddress(String registryAddress) {
-        this.registryAddress = registryAddress;
-    }
 
     public void setRpcEncoder(RPCConsumerEncoder rpcEncoder) {
         this.rpcEncoder = rpcEncoder;

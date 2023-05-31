@@ -95,8 +95,6 @@ public class SimpleRpcConsumerPostProcessor implements BeanFactoryPostProcessor,
         beanDefinitionBuilder.setInitMethodName("init");
         beanDefinitionBuilder.addPropertyValue("interfaceClass", field.getType());
         beanDefinitionBuilder.addPropertyValue("serviceVersion", simpleRpcConsumer.serviceVersion());
-        beanDefinitionBuilder.addPropertyValue("registryType", simpleRpcConsumer.registerType());
-        beanDefinitionBuilder.addPropertyValue("registryAddress", simpleRpcConsumer.registerAddress());
 
         BeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
 
