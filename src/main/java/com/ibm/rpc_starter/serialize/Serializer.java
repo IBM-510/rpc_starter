@@ -1,5 +1,7 @@
 package com.ibm.rpc_starter.serialize;
 
+import com.ibm.rpc_starter.annotation.SPI;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -7,6 +9,7 @@ package com.ibm.rpc_starter.serialize;
  * @Date: 2023/05/23/13:36
  * @Description:
  */
+@SPI
 public interface Serializer {
     /**
      * 序列化
