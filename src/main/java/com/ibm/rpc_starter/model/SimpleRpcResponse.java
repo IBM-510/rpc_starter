@@ -1,6 +1,7 @@
 package com.ibm.rpc_starter.model;
 
-import lombok.Data;
+import com.ibm.rpc_starter.common.enumeration.RpcResponseCodeEnum;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,8 +12,13 @@ import java.io.Serializable;
  * @Date: 2023/05/23/13:28
  * @Description: rpc处理结果
  */
-@Data
-public class SimpleRpcResponse implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
+@ToString
+public class SimpleRpcResponse<T> implements Serializable {
     private static final long serialVersionUID = 7306531831668743451L;
 
     /**
@@ -21,16 +27,37 @@ public class SimpleRpcResponse implements Serializable {
     private String bizNO;
 
     /**
-     * 错误结果提示消息
+     * response code
      */
-    private String msg;
+    private Integer code;
+
+    /**
+     * response message
+     */
+    private String message;
+
+    private String requestId;
 
     /**
      * 实际结果
      */
     private Object data;
-    /**
-     * 编码类型
-     */
-    private int serializeType;
+
+    public static <T> SimpleRpcResponse<T> success(T data, String requestId) {
+        SimpleRpcResponse<T> response = new SimpleRpcResponse<>();
+        response.setCode(RpcResponseCodeEnum.SUCCESS.getCode());
+        response.setMessage(RpcResponseCodeEnum.SUCCESS.getMessage());
+        response.setRequestId(requestId);
+        if (null != data) {
+            response.setData(data);
+        }
+        return response;
+    }
+
+    public static <T> SimpleRpcResponse<T> fail(RpcResponseCodeEnum rpcResponseCodeEnum) {
+        SimpleRpcResponse<T> response = new SimpleRpcResponse<>();
+        response.setCode(rpcResponseCodeEnum.getCode());
+        response.setMessage(rpcResponseCodeEnum.getMessage());
+        return response;
+    }
 }

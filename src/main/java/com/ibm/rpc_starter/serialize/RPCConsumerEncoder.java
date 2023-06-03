@@ -39,7 +39,7 @@ public class RPCConsumerEncoder extends MessageToByteEncoder {
         if (data == null) {
             log.error("encode fail,result data null,result object=" + o);
         }
-        byteBuf.writeInt(data.length+Integer.BYTES);//数据的字节数加上序列化协议的一个int
+        byteBuf.writeInt(data.length+Byte.BYTES);//数据的字节数加上序列化协议的一个int
         if(serializer instanceof HessianSerializer)
             byteBuf.writeInt(SerializeTypeEnum.HESSIAN_TYPE.getType());
         else if(serializer instanceof KryoSerializer)

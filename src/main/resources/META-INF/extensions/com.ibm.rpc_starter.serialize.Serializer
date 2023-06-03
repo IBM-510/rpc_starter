@@ -1,1 +1,2 @@
 hessian=com.ibm.rpc_starter.serialize.hessian.HessianSerializer
+kryo=com.ibm.rpc_starter.serialize.kryo.KryoSerializer

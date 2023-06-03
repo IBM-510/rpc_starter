@@ -15,8 +15,18 @@ import lombok.ToString;
 @Getter
 @ToString
 public enum SerializeTypeEnum {
-    KRYO_TYPE("kryo",0),
-    HESSIAN_TYPE("hessian",1);
-    private final String message;
-    private final int type;
+    KRYO_TYPE((byte) 0x01, "kyro"),
+    HESSIAN_TYPE((byte) 0X02, "hessian");
+
+    private final byte type;
+    private final String name;
+
+    public static String getName(byte type) {
+        for (SerializeTypeEnum c : SerializeTypeEnum.values()) {
+            if (c.getType() == type) {
+                return c.name;
+            }
+        }
+        return null;
+    }
 }

@@ -1,6 +1,6 @@
 package com.ibm.rpc_starter.model;
 
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,7 +11,11 @@ import java.io.Serializable;
  * @Date: 2023/05/23/00:13
  * @Description: RPC请求领域模型
  */
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
+@ToString
 public class SimpleRpcRequest implements Serializable {
     private static final long serialVersionUID = -6523563004185159591L;
 
@@ -44,8 +48,4 @@ public class SimpleRpcRequest implements Serializable {
      * 参数值列表
      */
     private Object[] paramValues;
-    /**
-     * 编码类型
-     */
-    private int serializeType;
 }
